@@ -10,7 +10,10 @@ function setupSocket(httpServer) {
       origin: process.env.CLIENT_URL || 'http://localhost:3000',
       methods: ['GET', 'POST'],
       credentials: true
-    }
+    },
+    transports: ['polling', 'websocket'],
+    pingTimeout: 60000,
+    pingInterval: 25000
   });
 
   io.use(async (socket, next) => {

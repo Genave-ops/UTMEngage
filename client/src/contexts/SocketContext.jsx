@@ -20,7 +20,10 @@ export const SocketProvider = ({ children }) => {
     const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
     const socket = io(socketUrl, {
       auth: { token },
-      transports: ['websocket', 'polling']
+      transports: ['polling', 'websocket'],
+      timeout: 20000,
+      reconnectionDelay: 5000,
+      reconnectionAttempts: 5
     });
 
     socket.on('connect', () => {
