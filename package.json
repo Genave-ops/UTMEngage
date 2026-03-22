@@ -1,41 +1,33 @@
 {
-  "name": "UTMEngage",
-  "version": "0.0.1",
+  "name": "utmengage",
+  "version": "1.0.0",
+  "description": "UTMEngage - Student Engagement Platform",
   "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest"
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm run dev",
+    "server:install": "cd server && npm install",
+    "client:install": "cd client && npm install",
+    "install:all": "npm run server:install && npm run client:install",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test",
+    "build": "cd client && npm run build"
   },
-  "dependencies": {
-    "react": "19.1.1",
-    "react-native": "0.82.1",
-    "@react-native/new-app-screen": "0.82.1",
-    "react-native-safe-area-context": "^5.5.2"
-  },
+  "keywords": [
+    "utm",
+    "engagement",
+    "student",
+    "platform"
+  ],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.3",
-    "@babel/runtime": "^7.25.0",
-    "@react-native-community/cli": "20.0.0",
-    "@react-native-community/cli-platform-android": "20.0.0",
-    "@react-native-community/cli-platform-ios": "20.0.0",
-    "@react-native/babel-preset": "0.82.1",
-    "@react-native/eslint-config": "0.82.1",
-    "@react-native/metro-config": "0.82.1",
-    "@react-native/typescript-config": "0.82.1",
-    "@types/jest": "^29.5.13",
-    "@types/react": "^19.1.1",
-    "@types/react-test-renderer": "^19.1.0",
-    "eslint": "^8.19.0",
-    "jest": "^29.6.3",
-    "prettier": "2.8.8",
-    "react-test-renderer": "19.1.1",
-    "typescript": "^5.8.3"
-  },
-  "engines": {
-    "node": ">=20"
+    "concurrently": "^9.1.2"
   }
 }
