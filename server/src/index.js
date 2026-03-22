@@ -63,6 +63,38 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Debug SMTP (REMOVE after fixing)
+app.get('/api/debug-smtp', async (req, res) => {
+  const nodemailer = require('nodemailer');
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT) || 587,
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+    const verify = await transporter.verify();
+    res.json({
+      smtpHost: process.env.SMTP_HOST || 'NOT SET',
+      smtpPort: process.env.SMTP_PORT || 'NOT SET',
+      smtpUser: process.env.SMTP_USER || 'NOT SET',
+      smtpPass: process.env.SMTP_PASS ? `SET (${process.env.SMTP_PASS.length} chars)` : 'NOT SET',
+      verified: verify
+    });
+  } catch (e) {
+    res.json({
+      smtpHost: process.env.SMTP_HOST || 'NOT SET',
+      smtpPort: process.env.SMTP_PORT || 'NOT SET',
+      smtpUser: process.env.SMTP_USER || 'NOT SET',
+      smtpPass: process.env.SMTP_PASS ? `SET (${process.env.SMTP_PASS.length} chars)` : 'NOT SET',
+      error: e.message
+    });
+  }
+});
+
 // Error handling
 app.use((err, req, res, next) => {
   console.error('Global error:', err.message, err.stack);
