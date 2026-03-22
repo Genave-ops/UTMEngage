@@ -2,7 +2,7 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM_EMAIL = process.env.EMAIL_FROM || 'UTM Engage <onboarding@resend.dev>';
+const FROM_EMAIL = process.env.EMAIL_FROM || 'UTM Engage <noreply@utmengage.online>';
 
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
