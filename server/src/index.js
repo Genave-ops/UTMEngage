@@ -53,6 +53,28 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Debug endpoint (REMOVE before final production)
+app.get('/api/debug-login', async (req, res) => {
+  try {
+    const bcrypt = require('bcryptjs');
+    const user = await db.getUserByEmailRaw('a.ramgoolam@utm.ac.mu');
+    const hasUser = !!user;
+    const hasPassword = !!user?.password;
+    let passwordMatch = false;
+    let error = null;
+    if (user?.password) {
+      try {
+        passwordMatch = await bcrypt.compare('admin123', user.password);
+      } catch (e) {
+        error = e.message;
+      }
+    }
+    res.json({ hasUser, hasPassword, passwordMatch, role: user?.role, status: user?.status, isVerified: user?.isVerified, error, nodeVersion: process.version });
+  } catch (e) {
+    res.json({ error: e.message, stack: e.stack });
+  }
+});
+
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
