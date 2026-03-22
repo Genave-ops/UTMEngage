@@ -7,7 +7,12 @@ let io;
 function setupSocket(httpServer) {
   io = new Server(httpServer, {
     cors: {
-      origin: process.env.CLIENT_URL || 'http://localhost:3000',
+      origin: function(origin, callback) {
+        if (!origin || origin.endsWith('.vercel.app') || origin.includes('localhost')) {
+          return callback(null, true);
+        }
+        callback(new Error('Not allowed by CORS'));
+      },
       methods: ['GET', 'POST'],
       credentials: true
     },
