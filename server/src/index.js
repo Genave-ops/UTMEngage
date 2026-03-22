@@ -53,17 +53,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Debug Google OAuth config (REMOVE after fixing)
-app.get('/api/debug-google', (req, res) => {
-  res.json({
-    clientId: process.env.GOOGLE_CLIENT_ID ? process.env.GOOGLE_CLIENT_ID.substring(0, 10) + '...' : 'NOT SET',
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET ? 'SET (' + process.env.GOOGLE_CLIENT_SECRET.length + ' chars)' : 'NOT SET',
-    redirectUri: process.env.GOOGLE_REDIRECT_URI || 'NOT SET',
-    redirectUriLength: (process.env.GOOGLE_REDIRECT_URI || '').length,
-    redirectUriHex: Buffer.from(process.env.GOOGLE_REDIRECT_URI || '').toString('hex')
-  });
-});
-
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
