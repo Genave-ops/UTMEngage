@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
+    "build": "echo 'No build step needed'",
     "seed": "node src/scripts/seed.js",
     "test": "jest --watchAll=false",
     "test:watch": "jest --watchAll"
